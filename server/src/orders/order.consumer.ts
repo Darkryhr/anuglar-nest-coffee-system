@@ -1,8 +1,19 @@
+import { CreateOrderDto } from './dto/create-order.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { OrderRepository } from './order.repository';
 import { Processor, Process } from '@nestjs/bull';
+import { Job } from 'bull';
 
-//* the consumer should add the coffee order to the database
 @Processor('coffee-orders')
 export class OrderConsumer {
+  constructor(
+    @InjectRepository(OrderRepository) private orderRepo: OrderRepository,
+  ) {}
+
   @Process('make-coffee')
-  async makeCoffee() {}
+  async processOrder(job: Job<CreateOrderDto>) {
+    console.log('reached processor');
+
+    await this.orderRepo.createOrder(job.data);
+  }
 }
