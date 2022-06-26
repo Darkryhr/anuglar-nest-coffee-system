@@ -1,8 +1,14 @@
-export class Order {
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { OrderStatus } from './order-status.enum';
+
+@Entity()
+export class Order extends BaseEntity {
+  @PrimaryGeneratedColumn()
   id: number;
 
-  name: string;
+  @Column()
+  client: string;
 
-  //TODO: make enum
-  status: string;
+  @Column()
+  status: OrderStatus;
 }

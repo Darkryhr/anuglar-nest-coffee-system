@@ -9,5 +9,7 @@ export class OrdersController {
   makeOrder() {}
 
   @Get()
-  getAllOrders() {}
+  getAllOrders() {
+    return this.ordersService.getAllOrders();
+  }
 }
